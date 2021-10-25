@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.PlaylistMapper">
+
+    <!-- Album 검색 -->
+    <!-- 노래 제목으로 앨범 검색 -->
+    <select id="searchAlbumByTitle" parameterType="String" resultType="com.example.demo.model.domain.Album">
+        select * from album as a
+        join song as s
+        on a.album_id = s.album_id
+        where s.title = #{title}
+    </select>
+
+    <!-- Album 검색 -->
+    <!-- 재생가능 지역으로 앨범 검색  -->
+    <select id="searchAlbumByLocale" parameterType="com.example.demo.code.enums.LocaleType" resultType="com.example.demo.model.domain.Album">
+        select * from album as a
+        join locale as l
+        on a.album_id = l.album_id
+        where l.locale_type = #{locale_type}
+    </select>
+
+    <!-- Song 검색 -->
+    <!-- 노래 제목으로 노래 검색 -->
+    <select id="findByTilte" parameterType="String" resultType="com.example.demo.model.domain.Song">
+        select * from Song
+        where title = #{title}
+    </select>
+
+    <!-- Song 검색 -->
+    <!-- 재생가능 지역으로 노래 검색  -->
+    <select id="findByLocale" parameterType="com.example.demo.code.enums.LocaleType" resultType="com.example.demo.model.domain.Song">
+       select * from song a, album b, locale c
+       where a.album_id = b.album_id and b.album_id = c.album_id and c.locale_type = #{locale_type}
+    </select>
+
+</mapper>
